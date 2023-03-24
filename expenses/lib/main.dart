@@ -22,10 +22,13 @@ class MyHomePage extends StatelessWidget {
         ),
         body: const Column(
           children: <Widget>[
-            Card(
-              elevation: 5,
-              color: Colors.blue,
-              child: Text('Gráfico'),
+            SizedBox(
+              width: double.infinity,
+              child: Card(
+                elevation: 5,
+                color: Colors.blue,
+                child: Text('Gráfico'),
+              ),
             ),
             Card(
               child: Text('Lista de Transações'),
