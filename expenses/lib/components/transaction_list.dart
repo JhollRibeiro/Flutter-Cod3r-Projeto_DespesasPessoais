@@ -14,59 +14,60 @@ class TransactionList extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 500,
-      child: SingleChildScrollView(
-        child: Column(
-          children: transactions.map((tr) {
-            return Card(
-              child: Row(children: <Widget>[
-                Container(
-                  margin: const EdgeInsets.symmetric(
-                    horizontal: 15,
-                    vertical: 10,
+      child: ListView.builder(
+        itemCount: transactions.length,
+        itemBuilder: (ctx, index) {
+          final tr = transactions[index];
+          return Card(
+            child: Row(children: <Widget>[
+              Container(
+                margin: const EdgeInsets.symmetric(
+                  horizontal: 15,
+                  vertical: 10,
+                ),
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Colors.purple,
+                    width: 2,
                   ),
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.purple,
-                      width: 2,
-                    ),
-                    borderRadius: const BorderRadius.all(
-                      Radius.circular(5),
-                    ),
-                  ),
-                  padding: const EdgeInsets.all(10),
-                  child: Text(
-                    'R\$ ${tr.value.toStringAsFixed(2)}',
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                      color: Colors.purple,
-                    ),
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(5),
                   ),
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start, // Exatamente igual
-                  children: <Widget>[
-                    Text(
-                      tr.title,
-                      style: const TextStyle(
-                        // Exatamente igual
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
+                padding: const EdgeInsets.all(10),
+                child: Text(
+                  'R\$ ${tr.value.toStringAsFixed(2)}',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                    color: Colors.purple,
+                  ),
+                ),
+              ),
+              Column(
+                crossAxisAlignment:
+                    CrossAxisAlignment.start, // Exatamente igual
+                children: <Widget>[
+                  Text(
+                    tr.title,
+                    style: const TextStyle(
+                      // Exatamente igual
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
                     ),
-                    Text(
-                      DateFormat('d MMM y').format(tr.date),
-                      style: TextStyle(
-                        // Exatamente igual
-                        color: Colors.grey[600],
-                      ),
-                    )
-                  ],
-                )
-              ]),
-            );
-          }).toList(),
-        ),
+                  ),
+                  Text(
+                    DateFormat('d MMM y').format(tr.date),
+                    style: TextStyle(
+                      // Exatamente igual
+                      color: Colors.grey[600],
+                    ),
+                  )
+                ],
+              )
+            ]),
+          );
+        },
       ),
     );
   }
