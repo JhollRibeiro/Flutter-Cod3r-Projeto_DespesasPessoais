@@ -21,7 +21,6 @@ class MyHomePage extends StatelessWidget {
           title: const Text('Despesas Pessoais'),
         ),
         body: const Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             SizedBox(
               width: double.infinity,
