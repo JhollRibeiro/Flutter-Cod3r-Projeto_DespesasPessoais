@@ -21,8 +21,8 @@ class MyHomePage extends StatelessWidget {
           title: const Text('Despesas Pessoais'),
         ),
         body: const Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start, // brincar com as possibilidades (spaceAround, spaceBetween, etc)
+          crossAxisAlignment: CrossAxisAlignment.center, // brincar com as possibilidades (start, end, etc)
           children: <Widget>[
             SizedBox(
               width: double.infinity,
