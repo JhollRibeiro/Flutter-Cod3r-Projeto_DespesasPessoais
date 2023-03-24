@@ -74,18 +74,18 @@ class MyHomePage extends StatelessWidget {
                     ),
                   ),
                   Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start, // Exatamente igual
                     children: <Widget>[
-                      Text(
+                      Text( 
                         tr.title,
-                        style: const TextStyle(
+                        style: const TextStyle( // Exatamente igual
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       Text(
                         tr.date.toString(),
-                        style: const TextStyle(
+                        style: const TextStyle( // Exatamente igual
                           color: Colors.grey,
                         ),
                       )
