@@ -23,6 +23,8 @@ class MyHomePage extends StatelessWidget {
         body: const Column(
           children: <Widget>[
             Card(
+              elevation: 5,
+              color: Colors.blue,
               child: Text('Gráfico'),
             ),
             Card(
