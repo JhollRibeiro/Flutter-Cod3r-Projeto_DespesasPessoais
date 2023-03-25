@@ -55,12 +55,12 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   _openTransactionFormModal(BuildContext context) {
-    // showModalBottomSheet(
-    //   context: context,
-    //   builder: (_) {
-    //     return TransactionForm(onSubmit: onSubmit)
-    //   },
-    // );
+    showModalBottomSheet(
+      context: context,
+      builder: (_) {
+        return TransactionForm(onSubmit: null);
+      },
+    );
   }
 
   @override
@@ -71,7 +71,7 @@ class _MyHomePageState extends State<MyHomePage> {
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.add),
-            onPressed: () {},
+            onPressed: () => _openTransactionFormModal(context),
           )
         ],
       ),
@@ -87,23 +87,16 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Text('Gráfico'),
               ),
             ),
-            Column(
-              children: <Widget>[
-                TransactionList(
+            TransactionList(
                   transactions: _transactions,
                 ),
-                TransactionForm(
-                  onSubmit: _addTransaction,
-                ),
-              ],
-            ),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
         elevation: 10,
         child: const Icon(Icons.add),
-        onPressed: () {},
+        onPressed: () => _openTransactionFormModal(context),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );

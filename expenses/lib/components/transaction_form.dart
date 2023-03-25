@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 class TransactionForm extends StatelessWidget {
   final titleController = TextEditingController();
   final valueController = TextEditingController();
-  final void Function(String, double) onSubmit;
+  void Function(String, double)? onSubmit;
 
-  TransactionForm({super.key, required this.onSubmit});
+  TransactionForm({super.key, this.onSubmit});
 
   _submitForm() {
     final title = titleController.text;
@@ -13,7 +13,7 @@ class TransactionForm extends StatelessWidget {
 
     if (title.isEmpty || value <= 0) return;
 
-    onSubmit(title, value);
+    onSubmit!(title, value);
   }
 
   @override
