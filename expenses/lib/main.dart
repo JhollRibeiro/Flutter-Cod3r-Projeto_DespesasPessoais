@@ -1,5 +1,9 @@
-import '../components/transaction_user.dart';
+import 'package:expenses/components/transaction_form.dart';
 import 'package:flutter/material.dart';
+import 'dart:math';
+import 'package:expenses/components/transaction_list.dart';
+import 'package:expenses/components/transaction_form.dart';
+import 'package:expenses/models/transaction.dart';
 
 void main() => runApp(const ExpensesApp());
 
@@ -14,8 +18,50 @@ class ExpensesApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
+
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  final _transactions = [
+    Transaction(
+      id: 't1',
+      title: 'Novo Tênis de corrida',
+      value: 310.76,
+      date: DateTime.now(),
+    ),
+    Transaction(
+      id: 't2',
+      title: 'Conta de Luz',
+      value: 211.30,
+      date: DateTime.now(),
+    ),
+  ];
+
+  _addTransaction(String title, double value) {
+    final newTransaction = Transaction(
+      id: Random().nextDouble().toString(),
+      title: title,
+      value: value,
+      date: DateTime.now(),
+    );
+
+    setState(() {
+      _transactions.add(newTransaction);
+    });
+  }
+
+  _openTransactionFormModal(BuildContext context) {
+    // showModalBottomSheet(
+    //   context: context,
+    //   builder: (_) {
+    //     return TransactionForm(onSubmit: onSubmit)
+    //   },
+    // );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,11 +75,11 @@ class MyHomePage extends StatelessWidget {
           )
         ],
       ),
-      body: const SingleChildScrollView(
+      body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            SizedBox(
+            const SizedBox(
               width: double.infinity,
               child: Card(
                 elevation: 5,
@@ -41,7 +87,16 @@ class MyHomePage extends StatelessWidget {
                 child: Text('Gráfico'),
               ),
             ),
-            TransactionUser(),
+            Column(
+              children: <Widget>[
+                TransactionList(
+                  transactions: _transactions,
+                ),
+                TransactionForm(
+                  onSubmit: _addTransaction,
+                ),
+              ],
+            ),
           ],
         ),
       ),
