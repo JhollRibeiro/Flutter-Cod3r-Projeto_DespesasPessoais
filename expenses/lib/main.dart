@@ -2,7 +2,6 @@ import 'package:expenses/components/transaction_form.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:expenses/components/transaction_list.dart';
-import 'package:expenses/components/transaction_form.dart';
 import 'package:expenses/models/transaction.dart';
 
 void main() => runApp(const ExpensesApp());
@@ -52,6 +51,8 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       _transactions.add(newTransaction);
     });
+
+    Navigator.of(context).pop();
   }
 
   _openTransactionFormModal(BuildContext context) {
