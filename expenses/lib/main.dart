@@ -11,8 +11,18 @@ class ExpensesApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: MyHomePage(),
+    final ThemeData tema = ThemeData(
+        // brightness: Brightness.dark,
+        );
+
+    return MaterialApp(
+      theme: tema.copyWith(
+        colorScheme: tema.colorScheme.copyWith(
+          primary: Colors.purple,
+          secondary: Colors.amber,
+        ),
+      ),
+      home: const MyHomePage(),
     );
   }
 }
@@ -89,8 +99,8 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             TransactionList(
-                  transactions: _transactions,
-                ),
+              transactions: _transactions,
+            ),
           ],
         ),
       ),
