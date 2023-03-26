@@ -17,28 +17,26 @@ class ExpensesApp extends StatelessWidget {
 
     return MaterialApp(
       theme: tema.copyWith(
-        colorScheme: tema.colorScheme.copyWith(
-          primary: Colors.purple,
-          secondary: Colors.amber,
-        ),
-        appBarTheme: const AppBarTheme(
-          titleTextStyle: TextStyle(
-            fontFamily: 'Quicksand',
-            fontSize: 25,
-            fontWeight: FontWeight.bold,
+          colorScheme: tema.colorScheme.copyWith(
+            primary: Colors.purple,
+            secondary: Colors.amber,
           ),
-        ),
-        textTheme: ThemeData.light().textTheme.copyWith(
-          titleLarge: TextStyle(
-            fontFamily: 'OpenSans',
-            color: Colors.grey[900],
-            fontWeight: FontWeight.bold,
+          appBarTheme: const AppBarTheme(
+            titleTextStyle: TextStyle(
+              fontFamily: 'Quicksand',
+              fontSize: 25,
+              fontWeight: FontWeight.bold,
+            ),
           ),
-          bodyMedium: const TextStyle(
-            fontFamily: 'Quicksand',
-          )
-        )
-      ),
+          textTheme: ThemeData.light().textTheme.copyWith(
+              titleLarge: TextStyle(
+                fontFamily: 'OpenSans',
+                color: Colors.grey[900],
+                fontWeight: FontWeight.bold,
+              ),
+              bodyMedium: const TextStyle(
+                fontFamily: 'Quicksand',
+              ))),
       home: const MyHomePage(),
     );
   }
@@ -52,20 +50,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final _transactions = [
-    Transaction(
-      id: 't1',
-      title: 'Novo Tênis de corrida',
-      value: 310.76,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: 't2',
-      title: 'Conta de Luz',
-      value: 211.30,
-      date: DateTime.now(),
-    ),
-  ];
+  final List<Transaction> _transactions = [];
 
   _addTransaction(String title, double value) {
     final newTransaction = Transaction(
