@@ -38,6 +38,7 @@ class ExpensesApp extends StatelessWidget {
               ),
               bodyMedium: const TextStyle(
                 fontFamily: 'Quicksand',
+                color: Colors.black,
               ))),
       home: const MyHomePage(),
     );
