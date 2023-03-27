@@ -18,7 +18,7 @@ class ChartBar extends StatelessWidget {
       children: <Widget>[
         FittedBox(
           child: Text(
-            'R\$${value.toStringAsFixed(2)}',
+            value.toStringAsFixed(2),
           ),
         ),
         Padding(
