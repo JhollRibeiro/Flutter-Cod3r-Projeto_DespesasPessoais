@@ -4,7 +4,6 @@ import 'dart:math';
 import 'package:expenses/components/transaction_list.dart';
 import 'package:expenses/models/transaction.dart';
 import 'package:expenses/components/chart.dart';
-import 'package:flutter/services.dart';
 
 void main() => runApp(const ExpensesApp());
 
@@ -16,11 +15,6 @@ class ExpensesApp extends StatelessWidget {
     final ThemeData tema = ThemeData(
         // brightness: Brightness.dark,
         );
-
-    // Setar orintação fixa do dispositivo
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-    ]);
 
     return MaterialApp(
       theme: tema.copyWith(
@@ -132,6 +126,8 @@ class _MyHomePageState extends State<MyHomePage> {
     ),
   ];
 
+  bool _showChart = false;
+
   List<Transaction> get _recentTransactions {
     return _transactions.where((tr) {
       return tr.date.isAfter(
@@ -200,18 +196,37 @@ class _MyHomePageState extends State<MyHomePage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             SizedBox(
-              height: availableHeight * 0.3,
-              child: Chart(
-                recentTransaction: _recentTransactions,
+              height: availableHeight * 0.05,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text('Exibir Gráfico'),
+                  Switch(
+                    value: _showChart,
+                    onChanged: (value) {
+                      setState(() {
+                        _showChart = value;
+                      });
+                    },
+                  ),
+                ],
               ),
             ),
-            SizedBox(
-              height: availableHeight * 0.7,
-              child: TransactionList(
-                transactions: _transactions,
-                onRemove: _removeTransaction,
+            if (_showChart)
+              SizedBox(
+                height: availableHeight * 0.3,
+                child: Chart(
+                  recentTransaction: _recentTransactions,
+                ),
               ),
-            ),
+            if (!_showChart)
+              SizedBox(
+                height: availableHeight * 0.65,
+                child: TransactionList(
+                  transactions: _transactions,
+                  onRemove: _removeTransaction,
+                ),
+              ),
           ],
         ),
       ),
