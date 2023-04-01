@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:expenses/components/transaction_list.dart';
 import 'package:expenses/models/transaction.dart';
 import 'package:expenses/components/chart.dart';
+import 'package:flutter/services.dart';
 
 void main() => runApp(const ExpensesApp());
 
@@ -15,6 +16,11 @@ class ExpensesApp extends StatelessWidget {
     final ThemeData tema = ThemeData(
         // brightness: Brightness.dark,
         );
+
+    // Setar orintação fixa do dispositivo
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
 
     return MaterialApp(
       theme: tema.copyWith(
