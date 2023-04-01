@@ -196,7 +196,7 @@ class _MyHomePageState extends State<MyHomePage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             SizedBox(
-              height: availableHeight * 0.05,
+              height: availableHeight * 0.1,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -214,14 +214,16 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             if (_showChart)
               SizedBox(
-                height: availableHeight * 0.3,
+                height:
+                    _showChart ? availableHeight * 0.9 : availableHeight * 0.3,
                 child: Chart(
                   recentTransaction: _recentTransactions,
                 ),
               ),
             if (!_showChart)
               SizedBox(
-                height: availableHeight * 0.65,
+                height:
+                    !_showChart ? availableHeight * 0.9 : availableHeight * 0.6,
                 child: TransactionList(
                   transactions: _transactions,
                   onRemove: _removeTransaction,
