@@ -22,10 +22,21 @@ class ExpensesApp extends StatelessWidget {
             primary: Colors.purple,
             secondary: Colors.amber,
           ),
-          appBarTheme: const AppBarTheme(
+          appBarTheme: AppBarTheme(
             titleTextStyle: TextStyle(
               fontFamily: 'Quicksand',
-              fontSize: 25,
+              // Para considerar a responsividade/adaptabilidade em textos
+              // é necessário definir o produto do 'textScaleFactor'.
+              // Essa propriedade é definida nas configurações do aparelho,
+              // logo, se o usuário definir um tamnaho de fonte para seu dispositivo
+              // os textos do seu app que usam tal propriedade serão adaptados automaticamente.
+              //
+              // Em nosso exemplo abaixo, o texto do appBar aplica e, portanto, seguirá
+              // as configurações do usuário.
+              //
+              // Vale lembrar que essa "configuração" será soproposta caso
+              // o fontSize seja definido dentro do Widget.
+              fontSize: 25 * MediaQuery.of(context).textScaleFactor,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -98,7 +109,10 @@ class _MyHomePageState extends State<MyHomePage> {
       title: const Text('Despesas Pessoais'),
       actions: <Widget>[
         IconButton(
-          icon: const Icon(Icons.add),
+          icon: Icon(
+            Icons.add,
+            size: 35 * MediaQuery.of(context).textScaleFactor,
+          ),
           onPressed: () => _openTransactionFormModal(context),
         )
       ],
@@ -106,7 +120,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     // Pegandop a altura disponível da tela dinamicamente.
     //
-    // Observe que foi necessário colocar o Widget 'AppBar' 
+    // Observe que foi necessário colocar o Widget 'AppBar'
     // numa constante para utilizar o valor de sua altura.
     final availableHeight = MediaQuery.of(context).size.height -
         appBar.preferredSize.height -
