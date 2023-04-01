@@ -86,7 +86,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  _removeTransaction(String id){
+  _removeTransaction(String id) {
     setState(() {
       _transactions.removeWhere((tr) => tr.id == id);
     });
@@ -94,24 +94,42 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final appBar = AppBar(
+      title: const Text('Despesas Pessoais'),
+      actions: <Widget>[
+        IconButton(
+          icon: const Icon(Icons.add),
+          onPressed: () => _openTransactionFormModal(context),
+        )
+      ],
+    );
+
+    // Pegandop a altura disponível da tela dinamicamente.
+    //
+    // Observe que foi necessário colocar o Widget 'AppBar' 
+    // numa constante para utilizar o valor de sua altura.
+    final availableHeight = MediaQuery.of(context).size.height -
+        appBar.preferredSize.height -
+        MediaQuery.of(context).padding.top;
+
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Despesas Pessoais'),
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.add),
-            onPressed: () => _openTransactionFormModal(context),
-          )
-        ],
-      ),
+      appBar: appBar,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Chart(recentTransaction: _recentTransactions),
-            TransactionList(
-              transactions: _transactions,
-              onRemove: _removeTransaction,
+            SizedBox(
+              height: availableHeight * 0.3,
+              child: Chart(
+                recentTransaction: _recentTransactions,
+              ),
+            ),
+            SizedBox(
+              height: availableHeight * 0.7,
+              child: TransactionList(
+                transactions: _transactions,
+                onRemove: _removeTransaction,
+              ),
             ),
           ],
         ),
