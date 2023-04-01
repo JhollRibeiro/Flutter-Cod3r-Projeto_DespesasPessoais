@@ -63,7 +63,68 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final List<Transaction> _transactions = [];
+  final List<Transaction> _transactions = [
+    Transaction(
+      id: 't0',
+      title: 'Conta antiga - Adicionando um texto muito grande',
+      value: 410.98,
+      date: DateTime.now().subtract(const Duration(days: 6)),
+    ),
+    Transaction(
+      id: 't1',
+      title: 'Novo Tênis de corrida',
+      value: 310.76,
+      date: DateTime.now().subtract(const Duration(days: 2)),
+    ),
+    Transaction(
+      id: 't2',
+      title: 'Conta de Luz',
+      value: 211.30,
+      date: DateTime.now().subtract(const Duration(days: 4)),
+    ),
+    Transaction(
+      id: 't3',
+      title: 'Cartão Crédito',
+      value: 1583.30,
+      date: DateTime.now(),
+    ),
+    Transaction(
+      id: 't4',
+      title: 'Lanche',
+      value: 557.98,
+      date: DateTime.now().subtract(const Duration(days: 2)),
+    ),
+    Transaction(
+      id: 't5',
+      title: 'Conta1',
+      value: 330.98,
+      date: DateTime.now().subtract(const Duration(days: 2)),
+    ),
+    Transaction(
+      id: 't6',
+      title: 'Conta2',
+      value: 410.98,
+      date: DateTime.now().subtract(const Duration(days: 1)),
+    ),
+    Transaction(
+      id: 't7',
+      title: 'Conta3',
+      value: 658.98,
+      date: DateTime.now().subtract(const Duration(days: 1)),
+    ),
+    Transaction(
+      id: 't8',
+      title: 'Conta4',
+      value: 330.98,
+      date: DateTime.now().subtract(const Duration(days: 7)),
+    ),
+    Transaction(
+      id: 't9',
+      title: 'Conta4',
+      value: 839.87,
+      date: DateTime.now().subtract(const Duration(days: 3)),
+    ),
+  ];
 
   List<Transaction> get _recentTransactions {
     return _transactions.where((tr) {
