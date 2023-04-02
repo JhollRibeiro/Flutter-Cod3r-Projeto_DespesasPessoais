@@ -174,13 +174,25 @@ class _MyHomePageState extends State<MyHomePage> {
     final appBar = AppBar(
       title: const Text('Despesas Pessoais'),
       actions: <Widget>[
+        if (isLandscape)
+          IconButton(
+            icon: Icon(
+              _showChart ? Icons.list : Icons.bar_chart_rounded,
+              size: 35 * MediaQuery.of(context).textScaleFactor,
+            ),
+            onPressed: () {
+              setState(() {
+                _showChart = !_showChart;
+              });
+            },
+          ),
         IconButton(
           icon: Icon(
             Icons.add,
             size: 35 * MediaQuery.of(context).textScaleFactor,
           ),
           onPressed: () => _openTransactionFormModal(context),
-        )
+        ),
       ],
     );
 
@@ -202,36 +214,16 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            if (isLandscape)
-              SizedBox(
-                height: availableHeight * 0.1,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text('Exibir Gráfico'),
-                    Switch(
-                      value: _showChart,
-                      onChanged: (value) {
-                        setState(() {
-                          _showChart = value;
-                        });
-                      },
-                    ),
-                  ],
-                ),
-              ),
             if (_showChart || !isLandscape)
               SizedBox(
-                height:
-                    availableHeight * (_showChart ? 0.9 : 0.3),
+                height: availableHeight * (_showChart ? 1 : 0.3),
                 child: Chart(
                   recentTransaction: _recentTransactions,
                 ),
               ),
             if (!_showChart || !isLandscape)
               SizedBox(
-                height:
-                    availableHeight * (!_showChart ? 0.9 : 0.6),
+                height: availableHeight * (!_showChart && isLandscape ? 1 : 0.7),
                 child: TransactionList(
                   transactions: _transactions,
                   onRemove: _removeTransaction,
