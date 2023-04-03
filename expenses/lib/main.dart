@@ -187,8 +187,13 @@ class _MyHomePageState extends State<MyHomePage> {
     final actions = <Widget>[
       if (isLandscape)
         _getIconButton(
-          _showChart ? isIOS ? CupertinoIcons.list_bullet : Icons.list :
-          isIOS ? CupertinoIcons.chart_bar_square : Icons.bar_chart_rounded,
+          _showChart
+              ? isIOS
+                  ? CupertinoIcons.list_bullet
+                  : Icons.list
+              : isIOS
+                  ? CupertinoIcons.chart_bar_square
+                  : Icons.bar_chart_rounded,
           () {
             setState(() {
               _showChart = !_showChart;
@@ -216,43 +221,46 @@ class _MyHomePageState extends State<MyHomePage> {
         appBar.preferredSize.height -
         mediaQuery.padding.top;
 
-    var bodyPage = SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          // if (isLandscape)
-          //   Row(
-          //     mainAxisAlignment: MainAxisAlignment.center,
-          //     children: [
-          //       const Text('Exibir Gráfico'),
-          //       Switch.adaptive( // usar o 'Switch.adaptive' para se adaptar à plataforma que está rodadno, ao invés de usar somente o 'Switch'
-          //                        // Com isso, será motrado no IOS o toogle padrão do IOS e nao o do Android
-          //                        // Ver commit 'Seção 5 - App Despesas Pessoais - Aula 148. Modo Paisagem #04'
-          //         value: _showChart,
-          //         onChanged: (value) {
-          //           setState(() {
-          //             _showChart = !_showChart;
-          //           });
-          //         },
-          //       )
-          //     ],
-          //   ),
-          if (_showChart || !isLandscape)
-            SizedBox(
-              height: availableHeight * (_showChart ? 1 : 0.3),
-              child: Chart(
-                recentTransaction: _recentTransactions,
+    var bodyPage = SafeArea(
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            // if (isLandscape)
+            //   Row(
+            //     mainAxisAlignment: MainAxisAlignment.center,
+            //     children: [
+            //       const Text('Exibir Gráfico'),
+            //       Switch.adaptive( // usar o 'Switch.adaptive' para se adaptar à plataforma que está rodadno, ao invés de usar somente o 'Switch'
+            //                        // Com isso, será motrado no IOS o toogle padrão do IOS e nao o do Android
+            //                        // Ver commit 'Seção 5 - App Despesas Pessoais - Aula 148. Modo Paisagem #04'
+            //         value: _showChart,
+            //         onChanged: (value) {
+            //           setState(() {
+            //             _showChart = !_showChart;
+            //           });
+            //         },
+            //       )
+            //     ],
+            //   ),
+            if (_showChart || !isLandscape)
+              SizedBox(
+                height: availableHeight * (_showChart ? 1 : 0.3),
+                child: Chart(
+                  recentTransaction: _recentTransactions,
+                ),
               ),
-            ),
-          if (!_showChart || !isLandscape)
-            SizedBox(
-              height: availableHeight * (!_showChart && isLandscape ? 1 : 0.7),
-              child: TransactionList(
-                transactions: _transactions,
-                onRemove: _removeTransaction,
+            if (!_showChart || !isLandscape)
+              SizedBox(
+                height:
+                    availableHeight * (!_showChart && isLandscape ? 1 : 0.7),
+                child: TransactionList(
+                  transactions: _transactions,
+                  onRemove: _removeTransaction,
+                ),
               ),
-            ),
-        ],
+          ],
+        ),
       ),
     );
 
