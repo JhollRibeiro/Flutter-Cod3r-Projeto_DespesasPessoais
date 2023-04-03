@@ -168,8 +168,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
     bool isLandscape =
-        MediaQuery.of(context).orientation == Orientation.landscape;
+        mediaQuery.orientation == Orientation.landscape;
 
     final appBar = AppBar(
       title: const Text('Despesas Pessoais'),
@@ -178,7 +179,7 @@ class _MyHomePageState extends State<MyHomePage> {
           IconButton(
             icon: Icon(
               _showChart ? Icons.list : Icons.bar_chart_rounded,
-              size: 35 * MediaQuery.of(context).textScaleFactor,
+              size: 35 * mediaQuery.textScaleFactor,
             ),
             onPressed: () {
               setState(() {
@@ -189,7 +190,7 @@ class _MyHomePageState extends State<MyHomePage> {
         IconButton(
           icon: Icon(
             Icons.add,
-            size: 35 * MediaQuery.of(context).textScaleFactor,
+            size: 35 * mediaQuery.textScaleFactor,
           ),
           onPressed: () => _openTransactionFormModal(context),
         ),
@@ -200,9 +201,9 @@ class _MyHomePageState extends State<MyHomePage> {
     //
     // Observe que foi necessário colocar o Widget 'AppBar'
     // numa constante para utilizar o valor de sua altura.
-    final availableHeight = MediaQuery.of(context).size.height -
+    final availableHeight = mediaQuery.size.height -
         appBar.preferredSize.height -
-        MediaQuery.of(context).padding.top;
+        mediaQuery.padding.top;
 
     if (!isLandscape) {
       _showChart = false;
