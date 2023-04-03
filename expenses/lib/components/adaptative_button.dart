@@ -11,7 +11,7 @@ class AdaptativeButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _label = Text(
+    final text = Text(
       label,
       style: const TextStyle(
         fontSize: 16,
@@ -25,7 +25,7 @@ class AdaptativeButton extends StatelessWidget {
             padding: const EdgeInsets.symmetric(
               horizontal: 20,
             ),
-            child: _label,
+            child: text,
           )
         : ElevatedButton(
             onPressed: onPressed,
@@ -34,7 +34,7 @@ class AdaptativeButton extends StatelessWidget {
             ),
             child: Padding(
               padding: const EdgeInsets.only(bottom: 12, top: 12),
-              child: _label,
+              child: text,
             ),
           );
   }
