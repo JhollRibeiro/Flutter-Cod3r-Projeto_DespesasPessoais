@@ -170,7 +170,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Widget _getIconButton(
       IconData icon, Function() fn, MediaQueryData mediaQuery) {
-    var ico = Icon(icon, size: 35 * mediaQuery.textScaleFactor);
+    final ico = Icon(icon, size: 35 * mediaQuery.textScaleFactor);
 
     return Platform.isIOS
         ? GestureDetector(onTap: fn, child: ico)
