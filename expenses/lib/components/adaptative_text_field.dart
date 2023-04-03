@@ -18,11 +18,18 @@ class AdaptativeTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Platform.isIOS
-        ? CupertinoTextField(
-            keyboardType: keyboardType,
-                onSubmitted: onSubmitted,
-                controller: dataController,
-                placeholder: label,
+        ? Padding(
+            padding: const EdgeInsets.only(bottom: 10),
+            child: CupertinoTextField(
+              keyboardType: keyboardType,
+              onSubmitted: onSubmitted,
+              controller: dataController,
+              placeholder: label,
+              padding: const EdgeInsets.symmetric(
+                horizontal: 6,
+                vertical: 12,
+              ),
+            ),
           )
         : TextField(
             keyboardType: keyboardType,
