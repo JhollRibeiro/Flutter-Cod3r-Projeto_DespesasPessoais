@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:expenses/components/transaction_form.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:expenses/components/transaction_list.dart';
@@ -167,6 +168,15 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  Widget _getIconButton(
+      IconData icon, Function() fn, MediaQueryData mediaQuery) {
+    var ico = Icon(icon, size: 35 * mediaQuery.textScaleFactor);
+
+    return Platform.isIOS
+        ? GestureDetector(onTap: fn, child: ico)
+        : IconButton(onPressed: fn, icon: ico);
+  }
+
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
@@ -174,29 +184,28 @@ class _MyHomePageState extends State<MyHomePage> {
     final isIOS = Platform
         .isIOS; // Através do 'Platform i(mport 'dart:io')' é possível detectar a plataforma em que o App está rodadno
 
+    final actions = <Widget>[
+      if (isLandscape)
+        _getIconButton(
+          _showChart ? isIOS ? CupertinoIcons.list_bullet : Icons.list :
+          isIOS ? CupertinoIcons.chart_bar_square : Icons.bar_chart_rounded,
+          () {
+            setState(() {
+              _showChart = !_showChart;
+            });
+          },
+          mediaQuery,
+        ),
+      _getIconButton(
+        isIOS ? CupertinoIcons.add : Icons.add,
+        () => _openTransactionFormModal(context),
+        mediaQuery,
+      ),
+    ];
+
     final appBar = AppBar(
       title: const Text('Despesas Pessoais'),
-      actions: <Widget>[
-        if (isLandscape)
-          IconButton(
-            icon: Icon(
-              _showChart ? Icons.list : Icons.bar_chart_rounded,
-              size: 35 * mediaQuery.textScaleFactor,
-            ),
-            onPressed: () {
-              setState(() {
-                _showChart = !_showChart;
-              });
-            },
-          ),
-        IconButton(
-          icon: Icon(
-            Icons.add,
-            size: 35 * mediaQuery.textScaleFactor,
-          ),
-          onPressed: () => _openTransactionFormModal(context),
-        ),
-      ],
+      actions: actions,
     );
 
     // Pegandop a altura disponível da tela dinamicamente.
@@ -207,60 +216,72 @@ class _MyHomePageState extends State<MyHomePage> {
         appBar.preferredSize.height -
         mediaQuery.padding.top;
 
+    var bodyPage = SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          // if (isLandscape)
+          //   Row(
+          //     mainAxisAlignment: MainAxisAlignment.center,
+          //     children: [
+          //       const Text('Exibir Gráfico'),
+          //       Switch.adaptive( // usar o 'Switch.adaptive' para se adaptar à plataforma que está rodadno, ao invés de usar somente o 'Switch'
+          //                        // Com isso, será motrado no IOS o toogle padrão do IOS e nao o do Android
+          //                        // Ver commit 'Seção 5 - App Despesas Pessoais - Aula 148. Modo Paisagem #04'
+          //         value: _showChart,
+          //         onChanged: (value) {
+          //           setState(() {
+          //             _showChart = !_showChart;
+          //           });
+          //         },
+          //       )
+          //     ],
+          //   ),
+          if (_showChart || !isLandscape)
+            SizedBox(
+              height: availableHeight * (_showChart ? 1 : 0.3),
+              child: Chart(
+                recentTransaction: _recentTransactions,
+              ),
+            ),
+          if (!_showChart || !isLandscape)
+            SizedBox(
+              height: availableHeight * (!_showChart && isLandscape ? 1 : 0.7),
+              child: TransactionList(
+                transactions: _transactions,
+                onRemove: _removeTransaction,
+              ),
+            ),
+        ],
+      ),
+    );
+
     if (!isLandscape) {
       _showChart = false;
     }
 
-    return Scaffold(
-      appBar: appBar,
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            // if (isLandscape)
-            //   Row(
-            //     mainAxisAlignment: MainAxisAlignment.center,
-            //     children: [
-            //       const Text('Exibir Gráfico'),
-            //       Switch.adaptive( // usar o 'Switch.adaptive' para se adaptar à plataforma que está rodadno, ao invés de usar somente o 'Switch'
-            //                        // Com isso, será motrado no IOS o toogle padrão do IOS e nao o do Android
-            //                        // Ver commit 'Seção 5 - App Despesas Pessoais - Aula 148. Modo Paisagem #04'
-            //         value: _showChart,
-            //         onChanged: (value) {
-            //           setState(() {
-            //             _showChart = !_showChart;
-            //           });
-            //         },
-            //       )
-            //     ],
-            //   ),
-            if (_showChart || !isLandscape)
-              SizedBox(
-                height: availableHeight * (_showChart ? 1 : 0.3),
-                child: Chart(
-                  recentTransaction: _recentTransactions,
-                ),
-              ),
-            if (!_showChart || !isLandscape)
-              SizedBox(
-                height:
-                    availableHeight * (!_showChart && isLandscape ? 1 : 0.7),
-                child: TransactionList(
-                  transactions: _transactions,
-                  onRemove: _removeTransaction,
-                ),
-              ),
-          ],
-        ),
-      ),
-      floatingActionButton: isIOS
-          ? Container() // Caso seja IOS não exibir um 'floatingActionButton' que é um componente "estranho" ao IOS
-          : FloatingActionButton(
-              elevation: 10,
-              child: const Icon(Icons.add),
-              onPressed: () => _openTransactionFormModal(context),
-            ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-    );
+    return isIOS
+        ? CupertinoPageScaffold(
+            navigationBar: CupertinoNavigationBar(
+                middle: const Text('Despesas Pessoais'),
+                trailing: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: actions,
+                )),
+            child: bodyPage,
+          )
+        : Scaffold(
+            appBar: appBar,
+            body: bodyPage,
+            floatingActionButton: isIOS
+                ? Container() // Caso seja IOS não exibir um 'floatingActionButton' que é um componente "estranho" ao IOS
+                : FloatingActionButton(
+                    elevation: 10,
+                    child: const Icon(Icons.add),
+                    onPressed: () => _openTransactionFormModal(context),
+                  ),
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.centerFloat,
+          );
   }
 }
