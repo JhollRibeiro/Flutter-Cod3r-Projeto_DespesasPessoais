@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import 'adaptative_button.dart';
+import 'adaptative_text_field.dart';
 
 class TransactionForm extends StatefulWidget {
   final void Function(String, double, DateTime) onSubmit;
@@ -59,23 +60,35 @@ class _TransactionFormState extends State<TransactionForm> {
           ),
           child: Column(
             children: <Widget>[
-              TextField(
-                controller: _titleController,
-                onSubmitted: (_) => _submitForm(),
-                decoration: const InputDecoration(
-                  labelText: 'Título',
-                ),
+              AdaptativeTextField(
+                label: 'Título',
+                onSubmitted: _submitForm,
+                dataController: _titleController,
               ),
-              TextField(
-                keyboardType: const TextInputType.numberWithOptions(
-                  decimal: true,
-                ),
-                onSubmitted: (_) => _submitForm(),
-                controller: _valueController,
-                decoration: const InputDecoration(
-                  labelText: 'Valor (R\$)',
-                ),
-              ),
+              AdaptativeTextField(
+                label: 'Valor (R\$)',
+                onSubmitted: _submitForm,
+                dataController: _valueController,
+                numericKeyboard: true,
+              )
+              ,
+              // TextField(
+              //   controller: _titleController,
+              //   onSubmitted: (_) => _submitForm(),
+              //   decoration: const InputDecoration(
+              //     labelText: 'Título',
+              //   ),
+              // ),
+              // TextField(
+              //   keyboardType: const TextInputType.numberWithOptions(
+              //     decimal: true,
+              //   ),
+              //   onSubmitted: (_) => _submitForm(),
+              //   controller: _valueController,
+              //   decoration: const InputDecoration(
+              //     labelText: 'Valor (R\$)',
+              //   ),
+              // ),
               SizedBox(
                 height: 70,
                 child: Row(
