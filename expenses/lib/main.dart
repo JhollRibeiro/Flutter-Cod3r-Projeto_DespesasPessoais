@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:expenses/components/transaction_form.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
@@ -169,8 +170,9 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
-    bool isLandscape =
-        mediaQuery.orientation == Orientation.landscape;
+    bool isLandscape = mediaQuery.orientation == Orientation.landscape;
+    final isIOS = Platform
+        .isIOS; // Através do 'Platform i(mport 'dart:io')' é possível detectar a plataforma em que o App está rodadno
 
     final appBar = AppBar(
       title: const Text('Despesas Pessoais'),
@@ -215,6 +217,23 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
+            // if (isLandscape)
+            //   Row(
+            //     mainAxisAlignment: MainAxisAlignment.center,
+            //     children: [
+            //       const Text('Exibir Gráfico'),
+            //       Switch.adaptive( // usar o 'Switch.adaptive' para se adaptar à plataforma que está rodadno, ao invés de usar somente o 'Switch'
+            //                        // Com isso, será motrado no IOS o toogle padrão do IOS e nao o do Android
+            //                        // Ver commit 'Seção 5 - App Despesas Pessoais - Aula 148. Modo Paisagem #04'
+            //         value: _showChart,
+            //         onChanged: (value) {
+            //           setState(() {
+            //             _showChart = !_showChart;
+            //           });
+            //         },
+            //       )
+            //     ],
+            //   ),
             if (_showChart || !isLandscape)
               SizedBox(
                 height: availableHeight * (_showChart ? 1 : 0.3),
@@ -224,7 +243,8 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             if (!_showChart || !isLandscape)
               SizedBox(
-                height: availableHeight * (!_showChart && isLandscape ? 1 : 0.7),
+                height:
+                    availableHeight * (!_showChart && isLandscape ? 1 : 0.7),
                 child: TransactionList(
                   transactions: _transactions,
                   onRemove: _removeTransaction,
@@ -233,11 +253,13 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        elevation: 10,
-        child: const Icon(Icons.add),
-        onPressed: () => _openTransactionFormModal(context),
-      ),
+      floatingActionButton: isIOS
+          ? Container() // Caso seja IOS não exibir um 'floatingActionButton' que é um componente "estranho" ao IOS
+          : FloatingActionButton(
+              elevation: 10,
+              child: const Icon(Icons.add),
+              onPressed: () => _openTransactionFormModal(context),
+            ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
