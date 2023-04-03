@@ -62,16 +62,16 @@ class _TransactionFormState extends State<TransactionForm> {
             children: <Widget>[
               AdaptativeTextField(
                 label: 'Título',
-                onSubmitted: _submitForm,
+                onSubmitted: (_) => _submitForm(),
                 dataController: _titleController,
               ),
               AdaptativeTextField(
                 label: 'Valor (R\$)',
-                onSubmitted: _submitForm,
+                onSubmitted: (_) => _submitForm(),
                 dataController: _valueController,
-                numericKeyboard: true,
-              )
-              ,
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
               // TextField(
               //   controller: _titleController,
               //   onSubmitted: (_) => _submitForm(),

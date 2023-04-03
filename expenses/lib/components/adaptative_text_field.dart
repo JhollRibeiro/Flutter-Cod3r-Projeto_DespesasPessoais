@@ -3,8 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AdaptativeTextField extends StatelessWidget {
-  final bool numericKeyboard;
-  final Function() onSubmitted;
+  final TextInputType? keyboardType;
+  final Function(String) onSubmitted;
   final TextEditingController dataController;
   final String label;
 
@@ -13,26 +13,20 @@ class AdaptativeTextField extends StatelessWidget {
       required this.onSubmitted,
       required this.label,
       required this.dataController,
-      this.numericKeyboard = false});
+      this.keyboardType = TextInputType.text});
 
   @override
   Widget build(BuildContext context) {
     return Platform.isIOS
         ? CupertinoTextField(
-            keyboardType: numericKeyboard
-                ? const TextInputType.numberWithOptions(decimal: true)
-                : null,
-                onSubmitted: (_) => onSubmitted(),
+            keyboardType: keyboardType,
+                onSubmitted: onSubmitted,
                 controller: dataController,
                 placeholder: label,
           )
         : TextField(
-            keyboardType: numericKeyboard
-                ? const TextInputType.numberWithOptions(
-                    decimal: true,
-                  )
-                : null,
-            onSubmitted: (_) => onSubmitted(),
+            keyboardType: keyboardType,
+            onSubmitted: onSubmitted,
             controller: dataController,
             decoration: InputDecoration(
               labelText: label,
