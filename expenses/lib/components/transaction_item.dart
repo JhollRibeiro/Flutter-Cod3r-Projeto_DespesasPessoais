@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:expenses/models/transaction.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -20,18 +19,10 @@ class TransactioItem extends StatefulWidget {
 class _TransactioItemState extends State<TransactioItem> {
 
   /*
-   * O problema ocorre quando se usa um componente do tipo Lista em uma classe 'StatefulWidget'
-   * Como a atualização do estado da aplicação não ocorre no componente, desde que eles sejam 
-   * os mesmos, após a mudança do estado, então nada além dos dados será atualizado (apenas para List)
-   * 
-   * No momento em que excluir o item, apenas os dados serão atualizado, porém o _backgroundColor
-   * não sofrerá alteração, pois o componente da lista nao mudou e a cor do item que ficou 
-   * passará a ser a cor do item que está imediatemente anterior a ale, ou seja, o item de baixo 
-   * assume a cor do item de cima q acabou de ser excuido. Bizarro, né?
-   * 
-   * Rode o código desse commit RESOLVER este problema (Resolução 2)
-   *  - Solução mais "cara" em termos de perfomance.
+   * Voltando o código
    */
+
+  /*
   static const colors = [
     Colors.red,
     Colors.purple,
@@ -48,6 +39,7 @@ class _TransactioItemState extends State<TransactioItem> {
 
     _backgroundColor = colors[Random().nextInt(5)];
   }
+  */
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +52,8 @@ class _TransactioItemState extends State<TransactioItem> {
       child: ListTile(
         leading: CircleAvatar(
           radius: 30,
-          backgroundColor: _backgroundColor, //Theme.of(context).colorScheme.primary,
+          backgroundColor: Theme.of(context).colorScheme.primary,
+          // backgroundColor: _backgroundColor,
           child: Padding(
             padding: const EdgeInsets.all(6),
             child: FittedBox(
