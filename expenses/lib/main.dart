@@ -64,7 +64,9 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+// "Copiar" (Mixin) a os membros/comportamentos da classe 'WidgetsBindingObserver'
+// para dentro da classe '_MyHomePageState'
+class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   final List<Transaction> _transactions = [
     Transaction(
       id: 't0',
@@ -129,6 +131,33 @@ class _MyHomePageState extends State<MyHomePage> {
   ];
 
   bool _showChart = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // A partir do Mixin poderemos adicionar um 'WidgetsBindingObserver observer'
+    // Aqui o observer será chamado sempre que a aplicação mudar de estado
+    // por isso está no 'initState()'.
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  // Medodo obtido a partir do Mixin da classe 'WidgetsBindingObserver'
+  // Esse método será chamado sempre que houver uma alteração no estado da nossa aplicação
+  // através do 'WidgetsBinding.instance.addObserver(this)' aplicado no 'initState()'.
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+
+    debugPrint(state.toString());
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+
+    // Remover o 'WidgetsBindingObserver observer'
+    WidgetsBinding.instance.removeObserver(this);
+  }
 
   List<Transaction> get _recentTransactions {
     return _transactions.where((tr) {
