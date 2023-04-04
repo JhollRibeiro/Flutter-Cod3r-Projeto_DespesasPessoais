@@ -45,24 +45,35 @@ class TransactionList extends StatelessWidget {
           )
         :
         /**
-         * Resolvendo o problema utilizando um 'ListView'
+         * Resolvendo o problema utilizando um 'ListView.builder.builder'
+         * 
+         * Por algum motivo o ValueKey(tr.id) não funciona neste contexto 'ListView.builder'
+         * por esse motivo vamos utilizar o 'GlobalObjectKey(tr)', uma solução mais "cara" 
+         * em termos de perfomance, pois o 'GlobalObjectKey' roda a árcore de componetes interia
+         * em busca da chave (key) até encontrá-la.
+         * 
+         * Por esse motivo a 'ValueKey' deve ser a solução preferencial.
          */
-        ListView(
-            children: transactions.map((tr) {
+        ListView.builder(
+            itemCount: transactions.length,
+            itemBuilder: (ctx, index) {
+              final tr = transactions[index];
               return TransactioItem(
-                key: ValueKey(tr.id),
+                key: GlobalObjectKey(tr),
                 tr: tr,
                 onRemove: onRemove,
               );
-            }).toList(),
+            },
           );
 
-    // ListView.builder(
-    //     itemCount: transactions.length,
-    //     itemBuilder: (ctx, index) {
-    //       final tr = transactions[index];
-    //       return TransactioItem(tr: tr, onRemove: onRemove);
-    //     },
+    // ListView(
+    //     children: transactions.map((tr) {
+    //       return TransactioItem(
+    //         key: ValueKey(tr.id),
+    //         tr: tr,
+    //         onRemove: onRemove,
+    //       );
+    //     }).toList(),
     //   );
   }
 }

@@ -29,7 +29,8 @@ class _TransactioItemState extends State<TransactioItem> {
    * passará a ser a cor do item que está imediatemente anterior a ale, ou seja, o item de baixo 
    * assume a cor do item de cima q acabou de ser excuido. Bizarro, né?
    * 
-   * Rode o código desse commit RESOLVER este problema
+   * Rode o código desse commit RESOLVER este problema (Resolução 2)
+   *  - Solução mais "cara" em termos de perfomance.
    */
   static const colors = [
     Colors.red,
